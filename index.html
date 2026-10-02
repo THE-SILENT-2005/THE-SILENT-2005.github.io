@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shubham — Developer Portfolio</title>
+
+    <meta
+        name="description"
+        content="Shubham's personal developer portfolio."
+    >
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+
+    <style>
+
+        /* =========================================================
+           ROOT
+        ========================================================= */
+
+        :root {
+            --accent-color: #18DE00;
+            --bg-color: #000000;
+            --surface-color: #080808;
+            --surface-light: #101010;
+            --border-color: rgba(255, 255, 255, 0.10);
+            --text-color: #ffffff;
+            --muted-color: #858585;
+
+            --max-width: 1200px;
+
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+            cursor: auto;
+        }
+
+        a,
+        button {
+            cursor: auto;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        ::selection {
+            background: var(--accent-color);
+            color: #000000;
+        }
+
+        /* =========================================================
+           CURSOR
+           Normal arrow cursor, colored #18DE00.
+        ========================================================= */
+
+        body,
+        a,
+        button,
+        input,
+        textarea,
+        select {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 2 L4 21 L9.5 15.5 L14 22 L17 20 L12.5 13.5 L20 13.5 Z' fill='%2318DE00' stroke='%23000000' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, auto;
+        }
+
+        /* =========================================================
+           BACKGROUND
+        ========================================================= */
+
+        .background-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 70px 70px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 85%
+            );
+        }
+
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            filter: blur(180px);
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: -2;
+            transform: translate(-50%, -50%);
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        nav {
+            width: min(100% - 40px, var(--max-width));
+            height: 76px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            position: relative;
+            color: #a5a5a5;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -7px;
+            width: 0;
+            height: 1px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-button {
+            display: none;
+            background: none;
+            border: 0;
+            color: white;
+            font-size: 22px;
+        }
+
+
+        /* =========================================================
+           GENERAL
+        ========================================================= */
+
+        main {
+            width: 100%;
+        }
+
+        section {
+            width: min(100% - 40px, var(--max-width));
+            margin: auto;
+        }
+
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: var(--accent-color);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            margin-bottom: 18px;
+        }
+
+        .section-label::before {
+            content: "";
+            width: 25px;
+            height: 1px;
+            background: var(--accent-color);
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 58px);
+            letter-spacing: -3px;
+            line-height: 1;
+            margin-bottom: 55px;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            min-height: 100vh;
+            width: min(100% - 40px, var(--max-width));
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            padding-top: 70px;
+        }
+
+        .hero-small {
+            color: var(--accent-color);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        .hero-title {
+            font-size: clamp(65px, 12vw, 150px);
+            line-height: 0.88;
+            letter-spacing: -8px;
+            font-weight: 800;
+            margin-bottom: 35px;
+        }
+
+        .hero-title .green {
+            color: var(--accent-color);
+        }
+
+        .hero-description {
+            max-width: 580px;
+            color: #999;
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 38px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 14px 21px;
+
+            border: 1px solid var(--accent-color);
+            background: var(--accent-color);
+            color: #000;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition:
+                transform 0.3s var(--ease),
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            background: transparent;
+            color: var(--accent-color);
+        }
+
+        .button.secondary {
+            background: transparent;
+            color: white;
+            border-color: var(--border-color);
+        }
+
+        .button.secondary:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 35px;
+            left: 0;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #555;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .scroll-line {
+            width: 45px;
+            height: 1px;
+            background: #333;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transform: translateX(-100%);
+            animation: scrollLine 2s infinite;
+        }
+
+        @keyframes scrollLine {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            50% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+
+        /* =========================================================
+           ABOUT
+        ========================================================= */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .profile-container {
+            position: relative;
+            width: min(100%, 300px);
+        }
+
+        .profile-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+
+            background: var(--surface-color);
+
+            border: 1px solid var(--border-color);
+
+            filter: grayscale(100%);
+            transition:
+                filter 0.5s ease,
+                transform 0.5s var(--ease);
+        }
+
+        .profile-container:hover .profile-image {
+            filter: grayscale(0%);
+            transform: translate(10px, -10px);
+        }
+
+        .profile-outline {
+            position: absolute;
+            inset: 12px -12px -12px 12px;
+            border: 1px solid var(--accent-color);
+            z-index: -1;
+        }
+
+        .about-text {
+            color: #999;
+            font-size: 17px;
+            line-height: 1.9;
+        }
+
+        .about-text strong {
+            color: white;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            margin-top: 45px;
+            background: var(--border-color);
+        }
+
+        .stat {
+            padding: 25px;
+            background: var(--bg-color);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stat-label {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================================
+           GITHUB
+        ========================================================= */
+
+        .github-profile {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            padding: 28px;
+
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+
+            margin-bottom: 30px;
+        }
+
+        .github-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-color);
+        }
+
+        .github-name {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .github-username {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .github-stats {
+            display: flex;
+            gap: 25px;
+            margin-left: auto;
+        }
+
+        .github-stat {
+            text-align: center;
+        }
+
+        .github-stat strong {
+            display: block;
+            font-size: 20px;
+        }
+
+        .github-stat span {
+            display: block;
+            margin-top: 3px;
+            color: #666;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .repo-card {
+            position: relative;
+
+            min-height: 210px;
+            padding: 28px;
+
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+
+            transform-style: preserve-3d;
+
+            transition:
+                border-color 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .repo-card:hover {
+            border-color: rgba(24, 222, 0, 0.5);
+            background: #0b0b0b;
+        }
+
+        .repo-icon {
+            color: var(--accent-color);
+            font-size: 18px;
+            margin-bottom: 22px;
+        }
+
+        .repo-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .repo-description {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.7;
+            max-width: 500px;
+        }
+
+        .repo-meta {
+            display: flex;
+            gap: 18px;
+            margin-top: 25px;
+            color: #666;
+            font-size: 11px;
+        }
+
+        .repo-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .repo-meta i {
+            color: var(--accent-color);
+        }
+
+        .repo-language {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+
+            font-size: 10px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .github-loading {
+            color: #555;
+            padding: 30px 0;
+            font-size: 13px;
+        }
+
+        .github-error {
+            color: #777;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+
+        /* =========================================================
+           SKILLS
+        ========================================================= */
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill {
+            padding: 13px 18px;
+
+            border: 1px solid var(--border-color);
+            color: #aaa;
+
+            font-size: 12px;
+
+            transition:
+                color 0.3s ease,
+                border-color 0.3s ease,
+                transform 0.3s var(--ease);
+        }
+
+        .skill:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+        }
+
+
+        /* =========================================================
+           CONTACT
+        ========================================================= */
+
+        .contact-box {
+            position: relative;
+            overflow: hidden;
+
+            padding: 80px 50px;
+
+            border: 1px solid var(--border-color);
+            background: var(--surface-color);
+        }
+
+        .contact-box::before {
+            content: "";
+
+            position: absolute;
+            width: 300px;
+            height: 300px;
+
+            top: -180px;
+            right: -100px;
+
+            background: var(--accent-color);
+            opacity: 0.06;
+
+            filter: blur(100px);
+        }
+
+        .contact-title {
+            font-size: clamp(40px, 7vw, 80px);
+            letter-spacing: -4px;
+            line-height: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .contact-description {
+            color: #777;
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border-color);
+            color: #777;
+
+            transition:
+                color 0.3s ease,
+                border-color 0.3s ease,
+                transform 0.3s var(--ease);
+        }
+
+        .social-link:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            width: min(100% - 40px, var(--max-width));
+            margin: auto;
+
+            padding: 35px 0;
+
+            border-top: 1px solid var(--border-color);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            color: #444;
+            font-size: 11px;
+        }
+
+        .footer-green {
+            color: var(--accent-color);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                position: fixed;
+                top: 76px;
+                left: 0;
+                width: 100%;
+
+                padding: 30px 20px;
+
+                background: rgba(0, 0, 0, 0.96);
+                border-bottom: 1px solid var(--border-color);
+
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+
+                transform: translateY(-120%);
+                transition: transform 0.4s var(--ease);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .menu-button {
+                display: block;
+            }
+
+            .hero-title {
+                letter-spacing: -5px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .profile-container {
+                width: 230px;
+            }
+
+            .repo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .github-profile {
+                flex-wrap: wrap;
+            }
+
+            .github-stats {
+                width: 100%;
+                margin-left: 0;
+                justify-content: flex-start;
+            }
+
+            .contact-box {
+                padding: 50px 25px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            section,
+            .hero,
+            footer {
+                width: min(100% - 28px, var(--max-width));
+            }
+
+            .section {
+                padding: 85px 0;
+            }
+
+            .hero-title {
+                font-size: 60px;
+                letter-spacing: -4px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .github-profile {
+                padding: 20px;
+            }
+
+            .github-stats {
+                gap: 20px;
+            }
+
+            .repo-card {
+                padding: 22px;
+            }
+
+            .contact-title {
+                letter-spacing: -2px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         BACKGROUND
+    ========================================================== -->
+
+    <div class="background-grid"></div>
+    <div class="glow" id="glow"></div>
+
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================== -->
+
+    <header>
+
+        <nav>
+
+            <a href="#home" class="logo magnetic">
+                S<span>.</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+
+                <li>
+                    <a href="#home" class="magnetic">Home</a>
+                </li>
+
+                <li>
+                    <a href="#about" class="magnetic">About</a>
+                </li>
+
+                <li>
+                    <a href="#github" class="magnetic">GitHub</a>
+                </li>
+
+                <li>
+                    <a href="#skills" class="magnetic">Skills</a>
+                </li>
+
+                <li>
+                    <a href="#contact" class="magnetic">Contact</a>
+                </li>
+
+            </ul>
+
+            <button
+                class="menu-button"
+                id="menuButton"
+                aria-label="Open navigation"
+            >
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main>
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero" id="home">
+
+            <div class="hero-content">
+
+                <div class="hero-small hero-item">
+                    Hello, I'm
+                </div>
+
+                <h1 class="hero-title hero-item">
+                    Shubham<span class="green">.</span>
+                </h1>
+
+                <p class="hero-description hero-item">
+                    I’m a Computer Engineering Student.
+                </p>
+
+                <div class="hero-actions hero-item">
+
+                    <a
+                        href="#github"
+                        class="button magnetic"
+                    >
+                        Explore my work
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+
+                    <a
+                        href="https://github.com/THE-SILENT-2005"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button secondary magnetic"
+                    >
+                        GitHub
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                Scroll
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ABOUT
+        ====================================================== -->
+
+        <section class="section" id="about">
+
+            <div class="section-label reveal">
+                About me
+            </div>
+
+            <div class="about-grid">
+
+                <div class="profile-container reveal">
+
+                    <img
+                        id="profileImage"
+                        class="profile-image"
+                        src=""
+                        alt="Shubham's GitHub profile"
+                    >
+
+                    <div class="profile-outline"></div>
+
+                </div>
+
+                <div>
+
+                    <p
+                        class="about-text reveal"
+                        style="margin-top: 22px;"
+                    >
+                        This portfolio automatically connects to my GitHub
+                        profile to display my public development work and
+                        GitHub activity.
+                    </p>
+
+                    <div class="stats reveal">
+
+                        <div class="stat">
+                            <div
+                                class="stat-number"
+                                id="repoCount"
+                            >
+                                —
+                            </div>
+
+                            <div class="stat-label">
+                                Repositories
+                            </div>
+                        </div>
+
+                        <div class="stat">
+                            <div
+                                class="stat-number"
+                                id="followerCount"
+                            >
+                                —
+                            </div>
+
+                            <div class="stat-label">
+                                Followers
+                            </div>
+                        </div>
+
+                        <div class="stat">
+                            <div
+                                class="stat-number"
+                                id="followingCount"
+                            >
+                                —
+                            </div>
+
+                            <div class="stat-label">
+                                Following
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             GITHUB
+        ====================================================== -->
+
+        <section class="section" id="github">
+
+            <div class="section-label reveal">
+                GitHub
+            </div>
+
+            <h2 class="section-title reveal">
+                Selected work<span style="color: var(--accent-color)">.</span>
+            </h2>
+
+            <div class="github-profile reveal">
+
+                <img
+                    id="githubAvatar"
+                    class="github-avatar"
+                    src=""
+                    alt="GitHub avatar"
+                >
+
+                <div>
+
+                    <div
+                        class="github-name"
+                        id="githubName"
+                    >
+                        Loading...
+                    </div>
+
+                    <div
+                        class="github-username"
+                        id="githubUsername"
+                    >
+                        @THE-SILENT-2005
+                    </div>
+
+                </div>
+
+                <div class="github-stats">
+
+                    <div class="github-stat">
+                        <strong id="profileRepos">—</strong>
+                        <span>Repos</span>
+                    </div>
+
+                    <div class="github-stat">
+                        <strong id="profileFollowers">—</strong>
+                        <span>Followers</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="repoContainer">
+
+                <div class="github-loading">
+                    Loading GitHub repositories...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SKILLS
+        ====================================================== -->
+
+        <section class="section" id="skills">
+
+            <div class="section-label reveal">
+                Toolkit
+            </div>
+
+            <h2 class="section-title reveal">
+                Things I work with<span style="color: var(--accent-color)">.</span>
+            </h2>
+
+            <div class="skills-list reveal">
+
+                <div class="skill">HTML</div>
+                <div class="skill">CSS</div>
+                <div class="skill">JavaScript</div>
+                <div class="skill">Python</div>
+                <div class="skill">C++</div>
+                <div class="skill">C</div>
+                <div class="skill">Git</div>
+                <div class="skill">GitHub</div>
+                <div class="skill">SQL</div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTACT
+        ====================================================== -->
+
+        <section class="section" id="contact">
+
+            <div class="contact-box reveal">
+
+                <div class="section-label">
+                    Get in touch
+                </div>
+
+                <h2 class="contact-title">
+                    Let's build<br>
+                    something<span style="color: var(--accent-color)">.</span>
+                </h2>
+
+                <p class="contact-description">
+                    Interested in my work or want to connect?
+                    You can find me on GitHub or Discord.
+                </p>
+
+                <div class="social-links">
+
+                    <a
+                        href="https://github.com/THE-SILENT-2005"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link magnetic"
+                        aria-label="GitHub"
+                    >
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a
+                        href="https://discord.com/users/1454903467154870282"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link magnetic"
+                        aria-label="Discord"
+                    >
+                        <i class="fa-brands fa-discord"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <span>
+            © <span id="year"></span> Shubham
+        </span>
+
+        <span>
+            Built with <span class="footer-green">code</span>.
+        </span>
+
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =====================================================
+           CONFIGURATION
+        ====================================================== */
+
+        const GITHUB_USERNAME = "THE-SILENT-2005";
+
+
+        /* =====================================================
+           YEAR
+        ====================================================== */
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+
+        /* =====================================================
+           MOBILE NAVIGATION
+        ====================================================== */
+
+        const menuButton =
+            document.getElementById("menuButton");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+        menuButton.addEventListener("click", () => {
+
+            navLinks.classList.toggle("active");
+
+            const icon = menuButton.querySelector("i");
+
+            if (navLinks.classList.contains("active")) {
+                icon.className = "fa-solid fa-xmark";
+            } else {
+                icon.className = "fa-solid fa-bars";
+            }
+
+        });
+
+        document.querySelectorAll(".nav-links a")
+            .forEach(link => {
+
+                link.addEventListener("click", () => {
+
+                    navLinks.classList.remove("active");
+
+                    menuButton.querySelector("i").className =
+                        "fa-solid fa-bars";
+
+                });
+
+            });
+
+
+        /* =====================================================
+           GSAP
+        ====================================================== */
+
+        gsap.registerPlugin(ScrollTrigger);
+
+
+        /* =====================================================
+           HERO ANIMATION
+        ====================================================== */
+
+        const heroTimeline = gsap.timeline({
+            defaults: {
+                ease: "power4.out"
+            }
+        });
+
+        heroTimeline
+            .from(".hero-small", {
+                opacity: 0,
+                y: 25,
+                duration: 0.8
+            })
+            .from(".hero-title", {
+                opacity: 0,
+                y: 80,
+                duration: 1.1
+            }, "-=0.5")
+            .from(".hero-description", {
+                opacity: 0,
+                y: 30,
+                duration: 0.8
+            }, "-=0.65")
+            .from(".hero-actions", {
+                opacity: 0,
+                y: 25,
+                duration: 0.7
+            }, "-=0.5")
+            .from(".scroll-indicator", {
+                opacity: 0,
+                duration: 0.8
+            }, "-=0.3");
+
+
+        /* =====================================================
+           SCROLL REVEAL
+        ====================================================== */
+
+        gsap.utils.toArray(".reveal").forEach((element) => {
+
+            gsap.from(element, {
+
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 88%",
+                    once: true
+                },
+
+                opacity: 0,
+                y: 45,
+                duration: 0.8,
+                ease: "power3.out"
+
+            });
+
+        });
+
+
+        /* =====================================================
+           GITHUB API
+        ====================================================== */
+
+        async function fetchGitHubData() {
+
+            const profileURL =
+                `https://api.github.com/users/${GITHUB_USERNAME}`;
+
+            const reposURL =
+                `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`;
+
+            try {
+
+                const [profileResponse, reposResponse] =
+                    await Promise.all([
+                        fetch(profileURL),
+                        fetch(reposURL)
+                    ]);
+
+                if (!profileResponse.ok) {
+                    throw new Error("GitHub profile not found.");
+                }
+
+                if (!reposResponse.ok) {
+                    throw new Error("GitHub repositories could not be loaded.");
+                }
+
+                const profile =
+                    await profileResponse.json();
+
+                const repositories =
+                    await reposResponse.json();
+
+
+                /* =============================================
+                   PROFILE
+                ============================================= */
+
+                document.getElementById("profileImage").src =
+                    profile.avatar_url;
+
+                document.getElementById("githubAvatar").src =
+                    profile.avatar_url;
+
+                document.getElementById("githubName").textContent =
+                    profile.name || profile.login;
+
+                document.getElementById("githubUsername").textContent =
+                    "@" + profile.login;
+
+                document.getElementById("repoCount").textContent =
+                    profile.public_repos;
+
+                document.getElementById("followerCount").textContent =
+                    profile.followers;
+
+                document.getElementById("followingCount").textContent =
+                    profile.following;
+
+                document.getElementById("profileRepos").textContent =
+                    profile.public_repos;
+
+                document.getElementById("profileFollowers").textContent =
+                    profile.followers;
+
+
+                /* =============================================
+                   SORT REPOSITORIES BY STARS
+                ============================================= */
+
+                const sortedRepos =
+                    repositories
+                        .filter(repo => !repo.fork)
+                        .sort(
+                            (a, b) =>
+                                b.stargazers_count -
+                                a.stargazers_count
+                        )
+                        .slice(0, 6);
+
+
+                renderRepositories(sortedRepos);
+
+            } catch (error) {
+
+                console.error(error);
+
+                document.getElementById("repoContainer").innerHTML = `
+                    <div class="github-error">
+                        Unable to load GitHub repositories right now.
+                        Please visit
+                        <a
+                            href="https://github.com/${GITHUB_USERNAME}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style="color: var(--accent-color)"
+                        >
+                            GitHub
+                        </a>
+                        directly.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RENDER REPOSITORIES
+        ====================================================== */
+
+        function renderRepositories(repositories) {
+
+            const container =
+                document.getElementById("repoContainer");
+
+            if (!repositories.length) {
+
+                container.innerHTML = `
+                    <div class="github-error">
+                        No public repositories available yet.
+                    </div>
+                `;
+
+                return;
+            }
+
+            container.innerHTML = `
+
+                <div class="repo-grid">
+
+                    ${repositories.map((repo, index) => `
+
+                        <a
+                            href="${repo.html_url}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="repo-card magnetic"
+                            data-index="${index}"
+                        >
+
+                            <div class="repo-icon">
+                                <i class="fa-regular fa-folder"></i>
+                            </div>
+
+                            <div class="repo-language">
+                                ${repo.language || "Code"}
+                            </div>
+
+                            <div class="repo-name">
+                                ${escapeHTML(repo.name)}
+                            </div>
+
+                            <div class="repo-description">
+                                ${
+                                    escapeHTML(
+                                        repo.description ||
+                                        "No description provided."
+                                    )
+                                }
+                            </div>
+
+                            <div class="repo-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-star"></i>
+                                    ${repo.stargazers_count}
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-code-fork"></i>
+                                    ${repo.forks_count}
+                                </span>
+
+                            </div>
+
+                        </a>
+
+                    `).join("")}
+
+                </div>
+
+            `;
+
+
+            /* =============================================
+               REPOSITORY ANIMATION
+            ============================================= */
+
+            gsap.from(".repo-card", {
+
+                scrollTrigger: {
+                    trigger: ".repo-grid",
+                    start: "top 85%",
+                    once: true
+                },
+
+                opacity: 0,
+                y: 50,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power3.out"
+
+            });
+
+
+            /* =============================================
+               3D TILT
+            ============================================= */
+
+            setupTilt();
+
+            updateCursorTargets();
+
+        }
+
+
+        /* =====================================================
+           HTML ESCAPE
+        ====================================================== */
+
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent = value;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           3D TILT
+        ====================================================== */
+
+        function setupTilt() {
+
+            const cards =
+                document.querySelectorAll(".repo-card");
+
+            cards.forEach(card => {
+
+                card.addEventListener(
+                    "mousemove",
+                    (event) => {
+
+                        const rect =
+                            card.getBoundingClientRect();
+
+                        const x =
+                            event.clientX - rect.left;
+
+                        const y =
+                            event.clientY - rect.top;
+
+                        const centerX =
+                            rect.width / 2;
+
+                        const centerY =
+                            rect.height / 2;
+
+                        const rotateX =
+                            ((y - centerY) / centerY) * -4;
+
+                        const rotateY =
+                            ((x - centerX) / centerX) * 4;
+
+                        card.style.transform =
+                            `perspective(900px)
+                             rotateX(${rotateX}deg)
+                             rotateY(${rotateY}deg)
+                             translateY(-5px)`;
+
+                    }
+                );
+
+
+                card.addEventListener(
+                    "mouseleave",
+                    () => {
+
+                        card.style.transform =
+                            "perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)";
+
+                    }
+                );
+
+            });
+
+        }
+
+
+        /* =====================================================
+           INITIALIZE
+        ====================================================== */
+
+        fetchGitHubData();
+
+        updateCursorTargets();
+
+    </script>
+
+</body>
+</html>
