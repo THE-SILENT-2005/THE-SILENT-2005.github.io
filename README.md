@@ -1,1 +1,1 @@
-# THE-SILENT-2005.github.io <span>https://the-silent-2005.github.io/</span>
+# THE-SILENT-2005.github.io (https://the-silent-2005.github.io/)
